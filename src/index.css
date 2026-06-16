@@ -1,0 +1,211 @@
+:root {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-color: #38bdf8;
+  --edge-empty: #334155;
+  --edge-drawn: #38bdf8;
+  --edge-x: #ef4444;
+  --cell-bg: #1e293b;
+  --dot-color: #475569;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 3rem;
+  margin: 0;
+  background: linear-gradient(to right, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.05em;
+}
+
+.header p {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.grid-container {
+  position: relative;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grid {
+  display: grid;
+  position: relative;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--dot-color);
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.edge {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.edge-h {
+  height: 12px;
+  width: 48px;
+  transform: translateY(-50%);
+}
+
+.edge-v {
+  width: 12px;
+  height: 48px;
+  transform: translateX(-50%);
+}
+
+.edge::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.edge-h::after {
+  width: 100%;
+  height: 4px;
+}
+
+.edge-v::after {
+  width: 4px;
+  height: 100%;
+}
+
+.edge-state-0::after {
+  background-color: var(--edge-empty);
+}
+
+.edge-state-1::after {
+  background-color: var(--edge-drawn);
+  box-shadow: 0 0 10px var(--edge-drawn);
+}
+
+.edge-state-2::after {
+  background-color: transparent;
+}
+
+.edge-state-2::before {
+  content: '×';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--edge-x);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.edge:hover::after {
+  background-color: rgba(56, 189, 248, 0.4);
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+button {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button:hover {
+  background: #2d3748;
+  transform: translateY(-2px);
+}
+
+button.active {
+  background: var(--accent-color);
+  color: #000;
+  border-color: var(--accent-color);
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stats span {
+  color: var(--text-primary);
+}
+
+@keyframes win-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.win-animation {
+  animation: win-pulse 0.5s ease-in-out infinite;
+}
